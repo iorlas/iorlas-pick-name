@@ -24,6 +24,7 @@ registries:
     on_hit: soft-flag
   - where: GitHub
     check: "the repo name is free for the intended owner"
+    cmd: "gh api repos/<owner>/<name> --silent; HTTP 404 means free"
     on_hit: kill
 
 conventions:

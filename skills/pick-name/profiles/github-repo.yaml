@@ -13,7 +13,8 @@ landscape:
 
 registries:
   - where: GitHub (owner namespace)
-    check: "https://github.com/<owner>/<name> returns 404 for the intended owner"
+    check: "repo <owner>/<name> does not exist"
+    cmd: "gh api repos/<owner>/<name> --silent; exit code 1 with HTTP 404 means free"
     on_hit: kill
   - where: GitHub (global)
     check: "search the exact name; note repos above 1000 stars that hold it"

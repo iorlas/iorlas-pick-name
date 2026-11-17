@@ -15,6 +15,7 @@ landscape:
 registries:
   - where: PyPI
     check: "https://pypi.org/project/<normalised-name>/ returns 404"
+    cmd: "curl -s -o /dev/null -w '%{http_code}' https://pypi.org/pypi/<normalised-name>/json ; 404 means free"
     normalise: "lowercase; runs of - _ . collapse to a single -"
     on_hit: kill
   - where: import name

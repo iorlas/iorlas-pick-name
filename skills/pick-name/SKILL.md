@@ -55,7 +55,7 @@ Output a short map. Feed it to the personas as `LANDSCAPE`. Keep the raw name li
 
 ## 4. Generate
 
-3 personas in parallel, 8-12 candidates each. Persona text and selection rules: `personas.md`.
+Spawn 3 persona agents with the Agent tool, all in one message so they run in parallel, 8-12 candidates each. Never write the candidates yourself in place of the agents: one voice produces one style. Persona text and selection rules: `personas.md`. Candidates the user already supplied are added to the pool, not generated.
 Prompt template per persona:
 
 ```
@@ -75,6 +75,8 @@ From round 5 on, compress kill history into pattern clusters; keep the 10 latest
 ## 5. Hard kills
 
 Run `filters.md` universal hard kills, then every loaded profile's `extra_filters` marked `kind: hard`, then exact and near collision against the scanned names and `registries`. A killed name is never shown; log the reason. Kill log on request.
+
+Exact-name availability is checked by running each registry's `cmd` with Bash (`gh api`, `curl`), not by web search. Search finds near neighbours and meaning clashes; it cannot prove a name is free. If a `cmd` cannot run (no auth, network blocked), mark that registry "not checked" on the card.
 
 ## 6. Fit and distance
 

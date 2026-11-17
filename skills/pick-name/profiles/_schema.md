@@ -18,6 +18,7 @@ registries:                   # step 5: is the exact name free?
   - where: PyPI
     check: "https://pypi.org/project/<normalised-name>/ returns 404"
     normalise: "lowercase; runs of - _ . collapse to one -"
+    cmd: "curl -s -o /dev/null -w '%{http_code}' https://pypi.org/pypi/<name>/json"   # optional; run it, do not search for it
     on_hit: kill
 
 conventions:                  # habits of this area; shown to personas
@@ -40,6 +41,7 @@ extra_filters:
 
 Rules:
 - Every field is optional except `id`, `title`, `triggers`.
+- A registry with a `cmd` is checked by running it (Bash). Web search never counts as an exact-name check; if only search ran, report "no hit in search", not "free".
 - Search results are evidence, not proof. A registry check that cannot run is reported as "not checked", never as free.
 - Keep a profile to facts about the area. Taste belongs in the brief.
 - New area: copy the closest profile, change `id`, `triggers`, and the sources.

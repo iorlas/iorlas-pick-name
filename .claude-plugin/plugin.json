@@ -1,7 +1,7 @@
 {
   "name": "iorlas-pick-name",
   "description": "Pick a name for a project, package, channel, repo or skill: gathers the neighbouring names first, generates with creative personas, screens every candidate, and loads one profile per platform (PyPI, GitHub, YouTube, Telegram, Claude skill).",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": {
     "name": "iorlas"
   },
