@@ -1,0 +1,42 @@
+id: github-repo
+title: GitHub repository
+triggers: [github repo, repository, open source project, repo name, github project]
+
+landscape:
+  - source: GitHub repository search
+    queries: ["<topic keywords>", "<topic> in:name"]
+    cap: 30
+    capture: [owner/name, stars, one-line purpose]
+  - source: GitHub topics page for the topic
+    cap: 15
+    capture: [name, stars]
+
+registries:
+  - where: GitHub (owner namespace)
+    check: "https://github.com/<owner>/<name> returns 404 for the intended owner"
+    on_hit: kill
+  - where: GitHub (global)
+    check: "search the exact name; note repos above 1000 stars that hold it"
+    on_hit: soft-flag
+
+conventions:
+  - "Lowercase kebab-case is standard"
+  - "Repo name often doubles as the package name; check the package registries too"
+  - "Name and description are the two fields a visitor reads before deciding to click"
+
+constraints:
+  charset: "a-z 0-9 - _ ."
+  max_length: 100
+  case: lower
+
+spoken_forms:
+  - "github.com/<owner>/<name>"
+  - "Have you seen <name>?"
+
+extra_filters:
+  - id: famous-repo
+    kind: soft
+    rule: "A repo above 1000 stars holds the exact name or its obvious form; searchers will land there first"
+  - id: org-trademark
+    kind: soft
+    rule: "Matches a company or product name that could trigger a takedown"

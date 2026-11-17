@@ -1,0 +1,48 @@
+id: pypi
+title: Python package on PyPI
+triggers: [python package, python library, pypi, pip install, python module, import name]
+
+landscape:
+  - source: PyPI search and package pages
+    queries: ["<topic keywords>", "<topic> client", "<topic> toolkit"]
+    cap: 30
+    capture: [name, summary]
+  - source: GitHub search for Python repos on the topic
+    queries: ["<topic> language:python"]
+    cap: 20
+    capture: [repo name, stars, one-line purpose]
+
+registries:
+  - where: PyPI
+    check: "https://pypi.org/project/<normalised-name>/ returns 404"
+    normalise: "lowercase; runs of - _ . collapse to a single -"
+    on_hit: kill
+  - where: import name
+    check: "the importable module name (dashes become underscores) does not shadow the standard library or a top package"
+    on_hit: kill
+
+conventions:
+  - "py- prefix and -py suffix are common and carry no signal"
+  - "Short single words are mostly taken; compounds and invented words are free"
+  - "Distribution name and import name may differ, but different names cost users"
+
+constraints:
+  charset: "a-z 0-9 - _ ."
+  max_length: 40
+  case: lower
+
+spoken_forms:
+  - "pip install <name>"
+  - "import <name>"
+  - "I use <name> for <job>"
+
+extra_filters:
+  - id: typosquat
+    kind: hard
+    rule: "Edit distance of 1 or less from a well-known package name (looks like a typo or a squat)"
+  - id: stdlib-shadow
+    kind: hard
+    rule: "Import name equals a standard-library module"
+  - id: terminal-typing
+    kind: soft
+    rule: "Awkward to type: mixed separators, long, easy to misspell at a prompt"

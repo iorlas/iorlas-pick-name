@@ -1,0 +1,57 @@
+id: claude-skill
+title: Claude Code plugin or skill
+triggers: [claude skill, claude plugin, skill name, plugin name, claude code plugin, marketplace plugin]
+
+landscape:
+  - source: plugin marketplaces and skill directories
+    queries: ["<job keywords> skill", "<job keywords> claude code plugin"]
+    cap: 30
+    capture: [plugin name, skill names, what it does]
+  - source: GitHub search for SKILL.md files on the topic
+    queries: ["<job keywords> filename:SKILL.md"]
+    cap: 20
+    capture: [repo name, skill name, description]
+  - source: the user's own installed plugins and marketplace
+    cap: 50
+    capture: [plugin name, skill names]
+
+registries:
+  - where: user's marketplace and installed plugins
+    check: "no plugin or skill already carries the name"
+    on_hit: kill
+  - where: public marketplaces
+    check: "exact name in directories and GitHub; note owners"
+    on_hit: soft-flag
+  - where: GitHub
+    check: "the repo name is free for the intended owner"
+    on_hit: kill
+
+conventions:
+  - "Plugin name: <owner>-<noun or verb>, kebab-case. The owner prefix keeps names unique across marketplaces."
+  - "Main skill directory is the plugin name without the owner prefix. It is invoked as plugin:skill, so the stutter is accepted."
+  - "Verb or action noun fits a skill the user triggers (brainstorm, delegate, pick-name); a plain noun fits state or config (my-language)."
+  - "Omit the name field in SKILL.md of a plugin skill; the directory name is used and the plugin prefix is applied. Reports say an explicit name can drop the prefix; test the installed result."
+  - "Extra behaviour goes in profile or reference files inside one skill. Every skill's name and description sit in context all session."
+  - "The description carries the triggers: what it does and when to use it."
+  - "Do not start the name with claude-, anthropic- or cc-plugin-."
+
+constraints:
+  charset: "a-z 0-9 -"
+  max_length: 64
+  case: lower
+
+spoken_forms:
+  - "/<plugin>:<skill>"
+  - "use the <skill> skill"
+  - "install <plugin>"
+
+extra_filters:
+  - id: reserved
+    kind: hard
+    rule: "Starts with claude-, anthropic-, anthropics- or cc-plugin-, or equals claude, anthropic, claude-code"
+  - id: description-fit
+    kind: soft
+    rule: "From the name alone, a model could not guess when to trigger the skill; the description must carry it"
+  - id: slash-typing
+    kind: soft
+    rule: "The full /plugin:skill form is long or ambiguous to type"

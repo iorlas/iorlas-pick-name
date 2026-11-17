@@ -1,0 +1,49 @@
+id: youtube
+title: YouTube channel
+triggers: [youtube, channel, video channel, streamer, creator name]
+
+landscape:
+  - source: YouTube channel search for the niche
+    queries: ["<niche keywords>", "<niche> channel", "<niche> tutorials"]
+    cap: 30
+    capture: [channel name, handle, subscriber band, what it covers]
+  - source: web search of "best <niche> YouTube channels" lists
+    cap: 15
+    capture: [channel name]
+
+registries:
+  - where: YouTube handle
+    check: "site:youtube.com \"@<handle>\" and the channel URL; no active channel holds the handle"
+    on_hit: kill-if-active
+  - where: channel name
+    check: "exact-name search on YouTube; an active creator with a real audience in the same niche is a kill"
+    on_hit: kill-if-same-niche
+  - where: other platforms
+    check: "same handle on Telegram, X, Instagram, domain .com"
+    on_hit: soft-flag
+
+conventions:
+  - "Handles are lowercase, no spaces; display name can differ"
+  - "Names that are readable in a thumbnail and speakable in a spoken intro win"
+  - "Personal names and invented words dominate large channels; descriptive names dominate small tutorial channels"
+
+constraints:
+  charset: "letters, digits, . _ - in the handle"
+  max_length: 30
+  case: any
+
+spoken_forms:
+  - "Hi, I'm <name>"
+  - "Watching <name>"
+  - "Subscribe to <name>"
+
+extra_filters:
+  - id: telephone
+    kind: soft
+    rule: "Heard on a stream, could a viewer find the channel by ear? Ambiguous spelling or transliteration hurts"
+  - id: search-drowned
+    kind: soft
+    rule: "Page one for the exact name is dominated by a word, film, game or brand a new channel cannot outrank"
+  - id: decay
+    kind: soft
+    rule: "Tied to a current meme or trend"

@@ -1,0 +1,44 @@
+id: telegram
+title: Telegram channel or bot
+triggers: [telegram, tg channel, telegram channel, telegram bot, t.me]
+
+landscape:
+  - source: web search for Telegram channels in the niche
+    queries: ["<niche> telegram channel", "t.me <niche>"]
+    cap: 25
+    capture: [channel name, "@username", what it covers]
+  - source: Telegram channel directories (tgstat and similar)
+    cap: 20
+    capture: [channel name, "@username", subscriber band]
+
+registries:
+  - where: Telegram username
+    check: "https://t.me/<username> shows a channel, user or bot page when the name is taken"
+    on_hit: kill
+  - where: channel title
+    check: "exact title search in directories; same-niche channel with a real audience is a kill"
+    on_hit: kill-if-same-niche
+
+conventions:
+  - "Title (free text, any language) and @username (ASCII) are separate; pick both"
+  - "Username rules: 5-32 characters, letters digits underscores, starts with a letter"
+  - "Bots must end in 'bot'"
+
+constraints:
+  charset: "a-z 0-9 _ in the username"
+  min_length: 5
+  max_length: 32
+  case: lower
+
+spoken_forms:
+  - "Subscribe to <title>"
+  - "t.me/<username>"
+  - "I read <title>"
+
+extra_filters:
+  - id: username-title-match
+    kind: soft
+    rule: "Username is not a clean ASCII form of the title; people will not guess it"
+  - id: telephone
+    kind: soft
+    rule: "Read aloud, the @username cannot be typed correctly on the first try"
