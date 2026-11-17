@@ -1,6 +1,6 @@
 # Personas
 
-Pick 3 per round, run in parallel, 8-12 candidates each.
+Pick 3 per round, run in parallel, 8-12 candidates each. Which slot each fills: see Slots.
 
 ## Selection
 
@@ -11,7 +11,17 @@ Pick 3 per round, run in parallel, 8-12 candidates each.
 
 Every persona also gets: "Your weakness: <its weakness>. Check yourself before submitting."
 
+## Slots
+
+- **Round 1**: two personas from the selection above get the brief and the landscape map. The third is the **Outsider** (below): it gets only what the thing is.
+- **Round 2+**: two personas work near the starred names. The third is the **explore slot**: any persona, told to ignore the stars and the landscape gaps on purpose, so the pool keeps diverging.
+
 ## Roster
+
+### The Outsider
+Knows only what the thing does, in one sentence. No audience, no vibe, no map of neighbours. Names it the way a stranger would explain it to a friend, or the way a child would label it.
+- Weakness: off-target noise. Check: does any candidate still point at the job?
+- Use when: always in round 1; its output keeps the pool from converging on the same gaps.
 
 ### The Scientist
 A 67-year-old researcher who spent 35 years in a research institute. Knows beautiful obscure terms from cybernetics, control theory, optics, acoustics, metallurgy, radio engineering. Proposes names that read as elegant technical terms: real words from fields nobody outside the lab knows. Gives the term, how young people would shorten it, and what it means.

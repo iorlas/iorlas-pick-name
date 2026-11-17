@@ -6,13 +6,14 @@ It does not just generate. It reads the neighbouring names first, generates agai
 
 ## How it works
 
-1. **Brief**: what is named, audience, languages, vibe, references.
-2. **Profiles**: loads one YAML per platform from `skills/pick-name/profiles/`. They stack.
-3. **Landscape scan**: collects names already in the area and the habits around them.
-4. **Generate**: three personas in parallel, aimed at gaps.
-5. **Screen**: hard kills (taken, offensive, typosquat) then soft flags.
-6. **Fit and distance**: does it mean something right, is it easy to say, is it too close or too far from neighbours.
-7. **Present** 5-7 candidates with evidence; iterate on reactions.
+1. **Invoke**: reads cheap local context, loads one YAML profile per platform (they stack), echoes what it understood.
+2. **Brief**: one free-text dump, your own names first.
+3. **Landscape scan**: background agents collect the names already in the area and the habits around them.
+4. **Generate and kill**: three persona agents (one is an Outsider who ignores the landscape), hard kills, registry checks by real command.
+5. **Cards**: five shuffled candidates plus a labelled wildcard, with evidence. Reply "2 4, worst 3".
+6. **Iterate**: each round keeps an explore slot that ignores your stars, so the pool keeps diverging.
+7. **Finalist gate**: a challenger and a pre-mortem per finalist, then lock or hold.
+8. **Save**: a provisional `names-<slug>.md`; `resume` reopens it.
 
 ## Profiles
 
